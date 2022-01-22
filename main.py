@@ -43,7 +43,7 @@ def rediscover(name: str, access_type: str, ip: str, username: str, passwd: str)
 @app.route("/rediscover", methods=['POST'])
 def front_rediscover():
     with open("static/index.html", "w") as f:
-        f.write("Rediscovering")
+        f.write('<meta http-equiv="refresh" content="5">Rediscovering')
 
     if cache.get("set_length") == 0:
         cache.set("set_length", 1)
