@@ -5,6 +5,25 @@
     <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
 </head>
 <body>
+<div style="margin:0;padding:0">
+ <form action="/rediscover" method="post">
+  <label for="name">Name:</label>
+  <input type="text" id="name" name="name">
+  <label for="ip">IP address:</label>
+  <input type="text" id="ip" name="ip">
+  <label for="login">Username:</label>
+  <input type="text" id="login" name="login">
+  <label for="pass">Name:</label>
+  <input type="text" id="pass" name="pass">
+  <label for="type">Type:</label>
+  <select id="type" name="type">
+  <option value="cisco_iosxe">IOS and IOS XE</option>
+  <option value="cisco_nxos">NX-OS</option>
+  <option value="cisco_iosxr">IOS XR</option>
+  <input type="submit" value="Rediscover">
+</select>
+</form>
+</div>
 <div id="mynetwork"></div>
 
 <script type="text/javascript">

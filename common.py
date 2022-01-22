@@ -33,7 +33,8 @@ PlatformTypeMap = {
     'WS-C3850-48U': AccessType.IOS,
     'N9K-C9300v': AccessType.NXOS,
     'WS-C4900M': AccessType.IOS,
-    'N9K-C9332C': AccessType.NXOS
+    'N9K-C9332C': AccessType.NXOS,
+    'CSR1000V': AccessType.IOS
 }
 
 
