@@ -49,14 +49,14 @@
         // create an array with nodes
     var nodes = new vis.DataSet([
         {%- for x in nodeset -%}
-        {id: {{x.id}}, label: "{{x.name}}", physics: false, title: "{{x.ipaddr}}"},
+        {id: {{x.id}}, label: "{{x.name}}", physics: false, title: "{{x.get_title()}}"},
         {%- endfor -%}
     ]);
 
     // create an array with edges
     var edges = new vis.DataSet([
         {%- for x in edgeset -%}
-        {from: {{x.head.id}}, to: {{x.tail.id}}, title: "{{x.head.name}}[{{x.headIntf}}]---{{x.tail.name}}[{{x.tailIntf}}]", label: "{{x.head.name}}[{{x.headIntf}}]---{{x.tail.name}}[{{x.tailIntf}}]"},
+        {from: {{x.head.id}}, to: {{x.tail.id}}, title: "{{x.get_title()}}", label: "{{x.get_title()}}"},
         {%- endfor -%}
     ]);
 

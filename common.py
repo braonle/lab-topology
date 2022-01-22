@@ -29,21 +29,25 @@ PlatformTypeMap = {
     'ASR9K Series': AccessType.IOSXR,
     '891': AccessType.IOS,
     '892': AccessType.IOS,
-    'ESX': AccessType.NONE
+    'ESX': AccessType.NONE,
+    'WS-C3850-48U': AccessType.IOS,
+    'N9K-C9300v': AccessType.NXOS,
+    'WS-C4900M': AccessType.IOS,
+    'N9K-C9332C': AccessType.NXOS
 }
 
 
 class Node:
     id: int
     name: str
-    ipaddr: str
+    ipaddr: Set[str]
     accessType: AccessType
     username: str
     password: str
 
     def __init__(self, name):
         self.name = name
-        self.ipaddr = ""
+        self.ipaddr = set()
         self.accessType = AccessType.NONE
         self.id = 0
         self.username = ""
@@ -53,13 +57,29 @@ class Node:
         if not isinstance(other, type(self)):
             return NotImplemented
 
-        return self.name == other.name #and self.ipaddr == other.ipaddr and self.accessType == other.accessType
+        return self.name == other.name and self.accessType == other.accessType
 
     def __hash__(self):
-        return hash((self.name, self.ipaddr, self.accessType))
+        return hash((self.name, self.accessType))
 
-    def parse_cdp_neighbors(self, nodeset: Set['Node'], edgeset: Set['Node']) -> Set['Node']:
+    def parse_neighbors(self, nodeset: Set['Node'], edgeset: Set['Node']) -> Set['Node']:
         pass
+
+    def get_title(self):
+        lst = list(self.ipaddr)
+        length = len(self.ipaddr)
+
+        if length == 0:
+            return "unknown"
+        elif length == 1:
+            return lst[0]
+
+        result = lst[0]
+        for s in lst[1:]:
+            result = result + f", {s}"
+
+        return result
+
 
     @staticmethod
     def create_node(access_type: AccessType, name: str) -> 'Node':
@@ -73,7 +93,7 @@ class Node:
 
 
 class NoneNode(Node):
-    def parse_cdp_neighbors(self, nodeset: Set['Node'], edgeset: Set['Node']) -> Set['Node']:
+    def parse_neighbors(self, nodeset: Set['Node'], edgeset: Set['Node']) -> Set['Node']:
         return set()
 
 
@@ -112,3 +132,6 @@ class Edge:
 
     def __hash__(self):
         return hash((self.head, self.headIntf)) + hash((self.tail, self.tailIntf))
+
+    def get_title(self):
+        return f"{self.head.name}[{self.headIntf}]---{self.tail.name}[{self.tailIntf}]"

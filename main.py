@@ -3,7 +3,7 @@ import common
 
 node = common.Node.create_node(common.AccessType.IOS, "A-PE4")
 node.id = 1
-node.ipaddr = "10.1.215.23"
+node.ipaddr.add("10.1.215.23")
 node.username = "cisco"
 node.password = "Cisco321"
 
@@ -18,11 +18,11 @@ edgeset = set()
 nodeset.add(node)
 
 
-newset = node.parse_cdp_neighbors(nodeset, edgeset)
+newset = node.parse_neighbors(nodeset, edgeset)
 while len(newset) != 0:
-    print(newset)
+    print(f"Nodes left to query: {len(newset)}")
     newnode = newset.pop()
-    tmpset = newnode.parse_cdp_neighbors(nodeset, edgeset)
+    tmpset = newnode.parse_neighbors(nodeset, edgeset)
     newset = newset.union(tmpset)
 
 templateLoader = jinja2.FileSystemLoader(searchpath="./")
