@@ -1,0 +1,4 @@
+Jinja2==3.0.3
+scrapli==2021.7.30
+scrapli-community==2021.7.30
+textfsm==1.1.2
