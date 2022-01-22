@@ -1,0 +1,11 @@
+Value Required HOST ([\w-]+)
+Value MGMT_IP ([\d\.]+)
+Value PLATFORM ([\w\\/ -]+)
+Value LOCAL_PORT ([\w/]+)
+Value REMOTE_PORT ([\w/]+)
+
+Start
+  ^Device ID:\s*${HOST}
+  ^.*IP(v4)? [Aa]ddress:\s+${MGMT_IP}
+  ^Platform:(\s*\w+\s+)?\s*${PLATFORM},
+  ^Interface: ${LOCAL_PORT},\s*Port ID \(outgoing port\): ${REMOTE_PORT} -> Record

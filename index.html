@@ -1,0 +1,67 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
+</head>
+<body>
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+
+    var options = {
+        interaction: {
+            navigationButtons: true,
+            hover: true
+        },
+        nodes: {
+            font: {
+                size: 18
+            }
+        },
+        edges: {
+            font: {
+                align: "middle",
+                size: 5
+            },
+            smooth: true,
+            width: 1.5
+        },
+        physics: {
+            barnesHut: {
+                springLength: 300,
+                avoidOverlap: 1,
+                gravitationalConstant: -5000
+            }
+        },
+        manipulation: {
+            editNode: function(nodeData,callback) {
+                var text = window.prompt("Enter node name", "Node")
+                nodeData.label = text;
+                callback(nodeData);
+                }
+        }
+    };
+
+        // create an array with nodes
+    var nodes = new vis.DataSet([{id: 16, label: "ise", physics: false, title: "10.1.215.183"},{id: 1, label: "A-PE4", physics: false, title: "10.1.215.23"},{id: 5, label: "PE5", physics: false, title: "10.1.215.14"},{id: 12, label: "sw2", physics: false, title: "10.1.215.18"},{id: 9, label: "sw1", physics: false, title: "10.1.215.17"},{id: 7, label: "PE1", physics: false, title: "10.1.215.31"},{id: 15, label: "A-PE3", physics: false, title: "10.1.215.13"},{id: 6, label: "PA2", physics: false, title: "10.1.215.12"},{id: 3, label: "cat-showroom", physics: false, title: "10.62.18.1"},{id: 8, label: "sw4", physics: false, title: "10.1.215.20"},{id: 10, label: "mgmt-con-r6", physics: false, title: "10.1.215.9"},{id: 13, label: "mgmt-sw-r1", physics: false, title: "10.62.22.43"},{id: 2, label: "mgmt-net-r6", physics: false, title: "10.1.215.2"},{id: 14, label: "005056b55cb2", physics: false, title: "10.1.215.7"},{id: 4, label: "PA1", physics: false, title: "10.1.215.11"},{id: 11, label: "sw3", physics: false, title: "10.1.215.19"},]);
+
+    // create an array with edges
+    var edges = new vis.DataSet([{from: 6, to: 2, title: "PA2[]---mgmt-net-r6[]", label: "PA2[]---mgmt-net-r6[]"},{from: 2, to: 3, title: "mgmt-net-r6[GigabitEthernet2/0/2]---cat-showroom[GigabitEthernet1/0/41]", label: "mgmt-net-r6[GigabitEthernet2/0/2]---cat-showroom[GigabitEthernet1/0/41]"},{from: 2, to: 12, title: "mgmt-net-r6[GigabitEthernet2/0/50]---sw2[GigabitEthernet1/3]", label: "mgmt-net-r6[GigabitEthernet2/0/50]---sw2[GigabitEthernet1/3]"},{from: 2, to: 8, title: "mgmt-net-r6[GigabitEthernet2/0/48]---sw4[GigabitEthernet0/24]", label: "mgmt-net-r6[GigabitEthernet2/0/48]---sw4[GigabitEthernet0/24]"},{from: 2, to: 9, title: "mgmt-net-r6[GigabitEthernet2/0/34]---sw1[FastEthernet0]", label: "mgmt-net-r6[GigabitEthernet2/0/34]---sw1[FastEthernet0]"},{from: 2, to: 15, title: "mgmt-net-r6[GigabitEthernet2/0/18]---A-PE3[GigabitEthernet0]", label: "mgmt-net-r6[GigabitEthernet2/0/18]---A-PE3[GigabitEthernet0]"},{from: 2, to: 16, title: "mgmt-net-r6[GigabitEthernet2/0/7]---ise[eth0]", label: "mgmt-net-r6[GigabitEthernet2/0/7]---ise[eth0]"},{from: 2, to: 6, title: "mgmt-net-r6[GigabitEthernet2/0/20]---PA2[MgmtEth0/RP0/CPU0/0]", label: "mgmt-net-r6[GigabitEthernet2/0/20]---PA2[MgmtEth0/RP0/CPU0/0]"},{from: 2, to: 14, title: "mgmt-net-r6[GigabitEthernet2/0/4]---005056b55cb2[eth0]", label: "mgmt-net-r6[GigabitEthernet2/0/4]---005056b55cb2[eth0]"},{from: 2, to: 13, title: "mgmt-net-r6[GigabitEthernet2/0/1]---mgmt-sw-r1[FastEthernet1/0/5]", label: "mgmt-net-r6[GigabitEthernet2/0/1]---mgmt-sw-r1[FastEthernet1/0/5]"},{from: 2, to: 5, title: "mgmt-net-r6[GigabitEthernet2/0/17]---PE5[MgmtEth0/RSP0/CPU0/0]", label: "mgmt-net-r6[GigabitEthernet2/0/17]---PE5[MgmtEth0/RSP0/CPU0/0]"},{from: 2, to: 7, title: "mgmt-net-r6[GigabitEthernet2/0/11]---PE1[MgmtEth0/RSP0/CPU0/0]", label: "mgmt-net-r6[GigabitEthernet2/0/11]---PE1[MgmtEth0/RSP0/CPU0/0]"},{from: 2, to: 10, title: "mgmt-net-r6[GigabitEthernet2/0/10]---mgmt-con-r6[GigabitEthernet0/0]", label: "mgmt-net-r6[GigabitEthernet2/0/10]---mgmt-con-r6[GigabitEthernet0/0]"},{from: 2, to: 4, title: "mgmt-net-r6[GigabitEthernet2/0/19]---PA1[MgmtEth0/RP0/CPU0/0]", label: "mgmt-net-r6[GigabitEthernet2/0/19]---PA1[MgmtEth0/RP0/CPU0/0]"},{from: 1, to: 2, title: "A-PE4[GigabitEthernet0]---mgmt-net-r6[GigabitEthernet2/0/21]", label: "A-PE4[GigabitEthernet0]---mgmt-net-r6[GigabitEthernet2/0/21]"},{from: 2, to: 8, title: "mgmt-net-r6[GigabitEthernet2/0/33]---sw4[FastEthernet0]", label: "mgmt-net-r6[GigabitEthernet2/0/33]---sw4[FastEthernet0]"},{from: 2, to: 11, title: "mgmt-net-r6[GigabitEthernet2/0/36]---sw3[FastEthernet0]", label: "mgmt-net-r6[GigabitEthernet2/0/36]---sw3[FastEthernet0]"},{from: 2, to: 12, title: "mgmt-net-r6[GigabitEthernet2/0/35]---sw2[FastEthernet0]", label: "mgmt-net-r6[GigabitEthernet2/0/35]---sw2[FastEthernet0]"},]);
+
+    // provide the data in the vis format
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    
+    // initialize your network!
+    var network = new vis.Network(container, data, options);
+
+    
+</script>
+</body>
+</html>

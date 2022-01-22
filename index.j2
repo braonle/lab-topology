@@ -1,0 +1,75 @@
+<html>
+<head>
+    <script type="text/javascript" src="https://unpkg.com/vis-data@latest/peer/umd/vis-data.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/vis-network@latest/peer/umd/vis-network.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://unpkg.com/vis-network/styles/vis-network.min.css" />
+</head>
+<body>
+<div id="mynetwork"></div>
+
+<script type="text/javascript">
+
+    // create a network
+    var container = document.getElementById('mynetwork');
+
+    var options = {
+        interaction: {
+            navigationButtons: true,
+            hover: true
+        },
+        nodes: {
+            font: {
+                size: 18
+            }
+        },
+        edges: {
+            font: {
+                align: "middle",
+                size: 5
+            },
+            smooth: true,
+            width: 1.5
+        },
+        physics: {
+            barnesHut: {
+                springLength: 300,
+                avoidOverlap: 1,
+                gravitationalConstant: -5000
+            }
+        },
+        manipulation: {
+            editNode: function(nodeData,callback) {
+                var text = window.prompt("Enter node name", "Node")
+                nodeData.label = text;
+                callback(nodeData);
+                }
+        }
+    };
+
+        // create an array with nodes
+    var nodes = new vis.DataSet([
+        {%- for x in nodeset -%}
+        {id: {{x.id}}, label: "{{x.name}}", physics: false, title: "{{x.ipaddr}}"},
+        {%- endfor -%}
+    ]);
+
+    // create an array with edges
+    var edges = new vis.DataSet([
+        {%- for x in edgeset -%}
+        {from: {{x.head.id}}, to: {{x.tail.id}}, title: "{{x.head.name}}[{{x.headIntf}}]---{{x.tail.name}}[{{x.tailIntf}}]", label: "{{x.head.name}}[{{x.headIntf}}]---{{x.tail.name}}[{{x.tailIntf}}]"},
+        {%- endfor -%}
+    ]);
+
+    // provide the data in the vis format
+    var data = {
+        nodes: nodes,
+        edges: edges
+    };
+    
+    // initialize your network!
+    var network = new vis.Network(container, data, options);
+
+    
+</script>
+</body>
+</html>
