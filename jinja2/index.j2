@@ -68,7 +68,7 @@
         // create an array with nodes
     var nodes = new vis.DataSet([
         {%- for x in nodeset -%}
-        {id: {{x.id}}, label: "{{x.name}}", physics: false, title: "{{x.get_title()}}"},
+        {id: {{x.id}}, label: "{{x.name}}", title: "{{x.get_title()}}"},
         {%- endfor -%}
     ]);
 
@@ -87,6 +87,9 @@
     
     // initialize your network!
     var network = new vis.Network(container, data, options);
+    network.on("stabilizationIterationsDone", function () {
+    network.setOptions( { physics: false } );
+    });
 
     
 </script>
