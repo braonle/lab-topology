@@ -10,8 +10,8 @@ cache.init_app(app=app, config={"CACHE_TYPE": "filesystem",'CACHE_DIR': '/tmp'})
 cache.set("set_length", 0)
 
 
-def rediscover(name: str, access_type: str, ip: str, username: str, passwd: str):
-    node = common.Node.create_node(common.AccessType(access_type), name)
+def rediscover(name: str, platform: str, ip: str, username: str, passwd: str):
+    node = common.Node.create_node(platform, name)
     node.id = 1
     node.ipaddr.add(ip)
     node.username = username
@@ -34,7 +34,7 @@ def rediscover(name: str, access_type: str, ip: str, username: str, passwd: str)
     templateEnv = jinja2.Environment(loader=templateLoader)
     TEMPLATE_FILE = "index.j2"
     template = templateEnv.get_template(TEMPLATE_FILE)
-    outputText = template.render(nodeset=nodeset, edgeset=edgeset)
+    outputText = template.render(nodeset=nodeset, edgeset=edgeset, platforms=list(common.PlatformTypeMap.keys()))
 
     with open("static/index.html", "w") as f:
         f.write(outputText)
@@ -51,8 +51,8 @@ def front_rediscover():
         ip = request.form["ip"]
         username = request.form["login"]
         passwd = request.form["pass"]
-        access_type = request.form["type"]
-        t = threading.Thread(target=rediscover, args=(name, access_type, ip, username, passwd))
+        platform = request.form["platform"]
+        t = threading.Thread(target=rediscover, args=(name, platform, ip, username, passwd))
         t.start()
     return redirect(url_for('front_status_rediscover'))
 

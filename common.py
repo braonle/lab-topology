@@ -42,26 +42,26 @@ class Node:
     id: int
     name: str
     ipaddr: Set[str]
-    accessType: AccessType
     username: str
     password: str
+    platform: str
 
     def __init__(self, name):
         self.name = name
         self.ipaddr = set()
-        self.accessType = AccessType.NONE
         self.id = 0
         self.username = ""
         self.password = ""
+        self.platform = ""
 
     def __eq__(self, other):
         if not isinstance(other, type(self)):
             return NotImplemented
 
-        return self.name == other.name and self.accessType == other.accessType
+        return self.name == other.name and self.platform == other.platform
 
     def __hash__(self):
-        return hash((self.name, self.accessType))
+        return hash((self.name, self.platform))
 
     def parse_neighbors(self, nodeset: Set['Node'], edgeset: Set['Node']) -> Set['Node']:
         pass
@@ -83,13 +83,13 @@ class Node:
 
 
     @staticmethod
-    def create_node(access_type: AccessType, name: str) -> 'Node':
+    def create_node(platform: str, name: str) -> 'Node':
         import cli
-        if access_type == AccessType.NONE:
+        if PlatformTypeMap[platform] == AccessType.NONE:
             return NoneNode(name)
-        elif access_type in (AccessType.NXOS, AccessType.IOS, AccessType.IOSXR):
+        elif PlatformTypeMap[platform] in (AccessType.NXOS, AccessType.IOS, AccessType.IOSXR):
             node = cli.SSHNode(name)
-            node.accessType = access_type
+            node.platform = platform
             return node
 
 

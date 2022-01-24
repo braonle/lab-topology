@@ -16,11 +16,7 @@
   <label for="pass">Name:</label>
   <input type="text" id="pass" name="pass">
   <label for="type">Type:</label>
-  <select id="type" name="type">
-  <option value="cisco_iosxe">IOS and IOS XE</option>
-  <option value="cisco_nxos">NX-OS</option>
-  <option value="cisco_iosxr">IOS XR</option>
-  <input type="submit" value="Rediscover">
+  <select id="platform" name="platform"><option value="WS-C3750X-48P">WS-C3750X-48P</option><option value="FAS3210">FAS3210</option><option value="UCS-FI-6248UP">UCS-FI-6248UP</option><option value="N9K-C93180YC-EX">N9K-C93180YC-EX</option><option value="N5K-C5548UP">N5K-C5548UP</option><option value="WS-C3750G-48PS">WS-C3750G-48PS</option><option value="ISE-VM-K9">ISE-VM-K9</option><option value="ASR-920-24SZ-IM">ASR-920-24SZ-IM</option><option value="Cisco-VM-SPID">Cisco-VM-SPID</option><option value="ME-C3750-24TE">ME-C3750-24TE</option><option value="WS-C3560X-24P">WS-C3560X-24P</option><option value="CISCO2901/K9">CISCO2901/K9</option><option value="WS-C3560X-24">WS-C3560X-24</option><option value="ASR9K">ASR9K</option><option value="NCS-5500">NCS-5500</option><option value="ASR9K Series">ASR9K Series</option><option value="891">891</option><option value="892">892</option><option value="ESX">ESX</option><option value="WS-C3850-48U">WS-C3850-48U</option><option value="N9K-C9300v">N9K-C9300v</option><option value="WS-C4900M">WS-C4900M</option><option value="N9K-C9332C">N9K-C9332C</option><option value="CSR1000V">CSR1000V</option><input type="submit" value="Rediscover">
 </select>
 </form>
 </div>
@@ -66,9 +62,10 @@
     };
 
         // create an array with nodes
-    var nodes = new vis.DataSet([])
+    var nodes = new vis.DataSet([]);
+
     // create an array with edges
-    var edges = new vis.DataSet([])
+    var edges = new vis.DataSet([]);
 
     // provide the data in the vis format
     var data = {
